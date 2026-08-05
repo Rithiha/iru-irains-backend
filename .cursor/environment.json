@@ -1,0 +1,18 @@
+{
+  "name": "iru-irains-backend",
+  "install": "bash .cursor/install.sh",
+  "start": "bash .cursor/start.sh",
+  "terminals": [
+    {
+      "name": "backend",
+      "command": "npm start",
+      "description": "Express API server (nodemon index.js) on port 3000."
+    }
+  ],
+  "ports": [
+    {
+      "name": "api",
+      "port": 3000
+    }
+  ]
+}
