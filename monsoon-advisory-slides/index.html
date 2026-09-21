@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NE Monsoon 2026 — Public Advisory | Tamil Nadu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="rain-layer" aria-hidden="true"></div>
+
+  <header class="deck-bar">
+    <div class="brand-lock">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        <p class="brand-name">Tamil Nadu Climate Advisory</p>
+        <p class="brand-sub">Based on IMD Long-Range Forecast · NE Monsoon 2026</p>
+      </div>
+    </div>
+    <nav class="slide-dots" aria-label="Slide navigation">
+      <button type="button" class="dot is-active" data-go="0" aria-label="Slide 1"></button>
+      <button type="button" class="dot" data-go="1" aria-label="Slide 2"></button>
+      <button type="button" class="dot" data-go="2" aria-label="Slide 3"></button>
+    </nav>
+    <p class="deck-hint">← → to navigate</p>
+  </header>
+
+  <main class="deck" id="deck">
+    <!-- SLIDE 1: Season at a glance -->
+    <section class="slide is-active" id="slide-1" aria-label="Season outlook">
+      <div class="slide-atmosphere slide-atmosphere--season"></div>
+      <div class="slide-grid slide-grid--hero">
+        <div class="hero-copy">
+          <p class="eyebrow animate-in" style="--d:0.05s">October – December 2026</p>
+          <h1 class="hero-brand animate-in" style="--d:0.12s">Northeast Monsoon</h1>
+          <p class="hero-lead animate-in" style="--d:0.22s">
+            One season, two stories: <strong>North Tamil Nadu</strong> may see less rain than usual;
+            <strong>South Tamil Nadu</strong> is likely to get more.
+          </p>
+          <div class="season-normal animate-in" style="--d:0.32s">
+            <span class="normal-label">State seasonal normal</span>
+            <span class="normal-value">443.3 <small>mm</small></span>
+            <span class="normal-note">Long Period Average · 1971–2020</span>
+          </div>
+        </div>
+
+        <div class="tn-split animate-in" style="--d:0.28s" role="img" aria-label="Tamil Nadu split into northern below-normal and southern above-normal rainfall zones">
+          <div class="zone zone--north">
+            <div class="zone-badge below">Below normal</div>
+            <h2>North TN</h2>
+            <p>Rainfall most likely to stay <em>below</em> the seasonal normal.</p>
+            <ul>
+              <li>Watch reservoirs &amp; drinking water</li>
+              <li>Plan crops for shorter wet spells</li>
+            </ul>
+          </div>
+          <div class="zone-divider" aria-hidden="true">
+            <span>IMD</span>
+          </div>
+          <div class="zone zone--south">
+            <div class="zone-badge above">Above normal</div>
+            <h2>South TN</h2>
+            <p>Rainfall most likely to be <em>above</em> the seasonal normal.</p>
+            <ul>
+              <li>Prepare for heavy spells &amp; local floods</li>
+              <li>Secure low-lying homes &amp; fields</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span>Slide 1 of 3</span>
+        <span>Source: India Meteorological Department</span>
+      </footer>
+    </section>
+
+    <!-- SLIDE 2: Month-by-month -->
+    <section class="slide" id="slide-2" aria-label="Month by month forecast">
+      <div class="slide-atmosphere slide-atmosphere--months"></div>
+      <div class="slide-inner">
+        <header class="section-head animate-in" style="--d:0.05s">
+          <p class="eyebrow">The season, month by month</p>
+          <h1 class="section-title">How the monsoon will unfold</h1>
+          <p class="section-lead">Temperatures stay warmer than usual all season. Rainfall shifts by region and month.</p>
+        </header>
+
+        <div class="month-rail">
+          <article class="month-card animate-in" style="--d:0.15s">
+            <div class="month-top">
+              <h2>October</h2>
+              <span class="rain-chip warm">Warmer days &amp; nights</span>
+            </div>
+            <p class="month-normal">Normal: <strong>172.0 mm</strong></p>
+            <div class="rain-map">
+              <div class="bar above"><span>West · Interior · South</span><strong>Above</strong></div>
+              <div class="bar below"><span>Northern TN</span><strong>Below</strong></div>
+            </div>
+            <p class="month-tip">Early wetness builds in southern &amp; western belts; north stays comparatively dry.</p>
+          </article>
+
+          <article class="month-card month-card--peak animate-in" style="--d:0.25s">
+            <div class="peak-tag">Peak focus</div>
+            <div class="month-top">
+              <h2>November</h2>
+              <span class="rain-chip warm">Warmer days &amp; nights</span>
+            </div>
+            <p class="month-normal">Normal: <strong>181.9 mm</strong></p>
+            <div class="rain-map">
+              <div class="bar above"><span>Most of Tamil Nadu</span><strong>Above</strong></div>
+              <div class="bar below"><span>Northern TN</span><strong>Below</strong></div>
+            </div>
+            <p class="month-tip">Highest rain chance for most districts — stay flood-ready outside the north.</p>
+          </article>
+
+          <article class="month-card animate-in" style="--d:0.35s">
+            <div class="month-top">
+              <h2>December</h2>
+              <span class="rain-chip warm">Warmer days &amp; nights</span>
+            </div>
+            <p class="month-normal">Normal: <strong>89.4 mm</strong></p>
+            <div class="rain-map">
+              <div class="bar below"><span>Most of Tamil Nadu</span><strong>Below</strong></div>
+              <div class="bar above"><span>West &amp; South</span><strong>Above</strong></div>
+            </div>
+            <p class="month-tip">Rain eases for much of the state; west &amp; south may still see surplus spells.</p>
+          </article>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span>Slide 2 of 3</span>
+        <span>Probability forecast · Tercile categories (IMD)</span>
+      </footer>
+    </section>
+
+    <!-- SLIDE 3: Public action -->
+    <section class="slide" id="slide-3" aria-label="What the public should do">
+      <div class="slide-atmosphere slide-atmosphere--action"></div>
+      <div class="slide-inner">
+        <header class="section-head animate-in" style="--d:0.05s">
+          <p class="eyebrow">Public advisory · Act on your region</p>
+          <h1 class="section-title">What families &amp; farmers should do</h1>
+          <p class="section-lead">El Niño is likely during this NE monsoon. Use this checklist — not panic, preparedness.</p>
+        </header>
+
+        <div class="action-board">
+          <div class="action-col animate-in" style="--d:0.15s">
+            <h2><span class="dot-signal below"></span> If you live in North TN</h2>
+            <ul class="action-list">
+              <li>Conserve water early — tanks &amp; household storage</li>
+              <li>Prefer short-duration / drought-tolerant crops where advised</li>
+              <li>Expect warmer nights; plan outdoor work for cooler hours</li>
+              <li>Do not wait for late-season catch-up rain in December</li>
+            </ul>
+          </div>
+
+          <div class="action-col action-col--wet animate-in" style="--d:0.25s">
+            <h2><span class="dot-signal above"></span> If you live in South / West TN</h2>
+            <ul class="action-list">
+              <li>Clear drains before November peak spells</li>
+              <li>Move valuables &amp; livestock from low-lying ground</li>
+              <li>Follow district flood &amp; landslide alerts promptly</li>
+              <li>Avoid crossing flowing water during heavy rain</li>
+            </ul>
+          </div>
+
+          <aside class="action-aside animate-in" style="--d:0.35s">
+            <h3>Everyone, statewide</h3>
+            <p>Days and nights are likely <strong>warmer than normal</strong> in Oct, Nov &amp; Dec.</p>
+            <div class="hotline">
+              <span>Stay updated</span>
+              <strong>IMD · District Collectorate · Local radio</strong>
+            </div>
+            <p class="fine-print">Seasonal outlooks are probability-based. Short-range warnings can change — verify before major decisions.</p>
+          </aside>
+        </div>
+      </div>
+      <footer class="slide-foot">
+        <span>Slide 3 of 3</span>
+        <span>Prepared for Tamil Nadu public communication · IMD data</span>
+      </footer>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
