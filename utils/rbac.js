@@ -1,15 +1,6 @@
 const client = require("../connection");
 const bcrypt = require("bcrypt");
 
-const REGIONS = [
-  "HQ",
-  "North West",
-  "North East",
-  "Central India",
-  "South Peninsular",
-  "East & North East",
-];
-
 const DEFAULT_ROLES = [
   { code: "hq", name: "HQ Admin", description: "Full access — headquarters", createdAt: "2025-12-29" },
   { code: "mc", name: "MC User", description: "Meteorological Centre pages", createdAt: "2026-06-11" },
@@ -18,19 +9,116 @@ const DEFAULT_ROLES = [
 ];
 
 const DEFAULT_ROUTES = [
-  { path: "/irains-dashboard", label: "Dashboard", allowedRoles: ["hq", "mc", "public", "sp"] },
-  { path: "/data-entry", label: "Data Entry", allowedRoles: ["hq", "mc"] },
-  { path: "/newverification", label: "Verification", allowedRoles: ["hq", "mc"] },
+  { path: "/QpfverificationReports2020", label: "Qpfverificationreports2020", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/QpfverificationReports2021", label: "Qpfverificationreports2021", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/QpfverificationReports2022", label: "Qpfverificationreports2022", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/about", label: "About", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/actual-block-rainfall", label: "Actual Block Rainfall", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/actual-block-rainfall-map", label: "Actual Block Rainfall Map", allowedRoles: ["hq", "mc", "public", "sp"] },
   { path: "/admin-panel", label: "Admin Panel", allowedRoles: ["hq"] },
-  { path: "/data-management", label: "Data Management", allowedRoles: ["hq"] },
-  { path: "/permissions", label: "Permissions", allowedRoles: ["hq"] },
-  { path: "/new-email-dissemination", label: "Email Dissemination", allowedRoles: ["hq", "mc", "sp"] },
-  { path: "/station-statistics", label: "Station Statistics", allowedRoles: ["hq", "mc", "sp"] },
-  { path: "/spatial-table", label: "Spatial Table", allowedRoles: ["hq", "mc", "public", "sp"] },
-  { path: "/monsoon-activity", label: "Monsoon Activity", allowedRoles: ["hq", "mc", "public", "sp"] },
   { path: "/all-maps", label: "All Maps", allowedRoles: ["hq", "mc", "public", "sp"] },
-  { path: "/yearlystationstatistics", label: "Yearly Station Stats", allowedRoles: ["hq", "mc", "sp"] },
+  { path: "/all-statistics", label: "All Statistics", allowedRoles: ["hq"] },
+  { path: "/allstatemaps", label: "Allstatemaps", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/allstates-actual-maps", label: "Allstates Actual Maps", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/annual-seasonal-monthly-actual-maps", label: "Annual Seasonal Monthly Actual Maps", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/arg-aws-realtime", label: "Arg Aws Realtime", allowedRoles: ["hq", "mc", "sp"] },
+  { path: "/block-actual-rainfall-map-daily-main-page-pubic", label: "Block Actual Rainfall Map Daily Main Page Pubic", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/block-rainfall", label: "Block Rainfall", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/block-rainfall-actual", label: "Block Rainfall Actual", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/block-rainfall-aws-actual", label: "Block Rainfall Aws Actual", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/block-rainfall-map-daily", label: "Block Rainfall Map Daily", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/cummulative-daily-spatial", label: "Cummulative Daily Spatial", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/cummulative-departure-country-map", label: "Cummulative Departure Country Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/cummulative-departure-district-central-India-map", label: "Cummulative Departure District Central India Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/cummulative-departure-district-east-and-north-east-map", label: "Cummulative Departure District East And North East Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/cummulative-departure-district-north-west-map", label: "Cummulative Departure District North West Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/cummulative-departure-district-pan-map", label: "Cummulative Departure District Pan Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/cummulative-departure-district-south-peninsular-map", label: "Cummulative Departure District South Peninsular Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/cummulative-departure-region-map", label: "Cummulative Departure Region Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/cummulative-departure-state-map", label: "Cummulative Departure State Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/cummulative-departure-subdiv-map", label: "Cummulative Departure Subdiv Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-actual-country-map", label: "Daily Actual Country Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-actual-homogenous-map", label: "Daily Actual Homogenous Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-actual-state-map", label: "Daily Actual State Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-actual-subdivision-map", label: "Daily Actual Subdivision Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-central-region", label: "Daily Central Region", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-central-region-actual", label: "Daily Central Region Actual", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-country-rf-distribution", label: "Daily Country Rf Distribution", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-departure-country-map", label: "Daily Departure Country Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-departure-homogenous-map", label: "Daily Departure Homogenous Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-departure-state-map", label: "Daily Departure State Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-departure-subdivision-map", label: "Daily Departure Subdivision Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-district-rf-distribution", label: "Daily District Rf Distribution", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-east-north-east-region", label: "Daily East North East Region", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-east-north-east-region-actual", label: "Daily East North East Region Actual", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-homogenous-rf-distribution", label: "Daily Homogenous Rf Distribution", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-north-west-region", label: "Daily North West Region", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-north-west-region-actual", label: "Daily North West Region Actual", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-south-peninsula-region", label: "Daily South Peninsula Region", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-south-peninsula-region-actual", label: "Daily South Peninsula Region Actual", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-state-rf-distribution", label: "Daily State Rf Distribution", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/daily-subdivision-rf-distribution", label: "Daily Subdivision Rf Distribution", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/data-entry", label: "Data Entry", allowedRoles: ["hq", "mc"] },
+  { path: "/data-management", label: "Data Management", allowedRoles: ["hq"] },
+  { path: "/distribution-district-in-states-daily", label: "Distribution District In States Daily", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/district-daily-spatial", label: "District Daily Spatial", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/district-map", label: "District Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/front-page", label: "Front Page", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/gangariverbasin", label: "Gangariverbasin", allowedRoles: ["hq"] },
+  { path: "/irains-dashboard", label: "Dashboard", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/log-info", label: "Log Info", allowedRoles: ["hq", "mc"] },
+  { path: "/monsoon-activity", label: "Monsoon Activity", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/new-email-dissemination", label: "Email Dissemination", allowedRoles: ["hq", "mc", "sp"] },
+  { path: "/newverification", label: "Verification", allowedRoles: ["hq", "mc"] },
+  { path: "/normal-rainfall-map", label: "Normal Rainfall Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/pan-india-region", label: "Pan India Region", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/pan-india-region-actual", label: "Pan India Region Actual", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/permissions", label: "Permissions", allowedRoles: ["hq"] },
+  { path: "/rainfall-departure", label: "Rainfall Departure", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/rainfall-graphs", label: "Rainfall Graphs", allowedRoles: ["hq", "mc", "public", "sp"] },
   { path: "/rainfalldatacm", label: "Rainfall Data CM", allowedRoles: ["hq", "mc", "sp"] },
+  { path: "/realTimeUpdatedRainfallMaps", label: "Realtimeupdatedrainfallmaps", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/realtime-station-data", label: "Realtime Station Data", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/region-map-mc-rmc", label: "Region Map Mc Rmc", allowedRoles: ["mc"] },
+  { path: "/river-basin", label: "River Basin", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/rmu-block-rainfall-map", label: "Rmu Block Rainfall Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/rmu-central-india-rainfall-map", label: "Rmu Central India Rainfall Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/rmu-country-rainfall-map", label: "Rmu Country Rainfall Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/rmu-district-rainfall-map", label: "Rmu District Rainfall Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/rmu-east-north-east-rainfall-map", label: "Rmu East North East Rainfall Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/rmu-north-west-rainfall-map", label: "Rmu North West Rainfall Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/rmu-region-rainfall-map", label: "Rmu Region Rainfall Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/rmu-south-peninsula-rainfall-map", label: "Rmu South Peninsula Rainfall Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/rmu-state-rainfall-map", label: "Rmu State Rainfall Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/rmu-statewise-district-map", label: "Rmu Statewise District Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/rmu-subdivision-rainfall-map", label: "Rmu Subdivision Rainfall Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/spatial-table", label: "Spatial Table", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/state-map-mc-rmc", label: "State Map Mc Rmc", allowedRoles: ["mc"] },
+  { path: "/station-level-data", label: "Station Level Data", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/station-statistics", label: "Station Statistics", allowedRoles: ["hq", "mc", "sp"] },
+  { path: "/subdiv-map-mc-rmc", label: "Subdiv Map Mc Rmc", allowedRoles: ["mc"] },
+  { path: "/underprogress", label: "Underprogress", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/upload-file", label: "Upload File", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/user-manual", label: "User Manual", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/verification-page", label: "Verification Page", allowedRoles: ["hq", "mc"] },
+  { path: "/verification-page-hq", label: "Verification Page Hq", allowedRoles: ["hq", "sp"] },
+  { path: "/verification-page-mc", label: "Verification Page Mc", allowedRoles: ["mc"] },
+  { path: "/weekly-country-rf-distribution", label: "Weekly Country Rf Distribution", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/weekly-daily-spatial", label: "Weekly Daily Spatial", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/weekly-departure-centalIndia-map", label: "Weekly Departure Centalindia Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/weekly-departure-country-map", label: "Weekly Departure Country Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/weekly-departure-district-panindia-map", label: "Weekly Departure District Panindia Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/weekly-departure-eastandnortheast-map", label: "Weekly Departure Eastandnortheast Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/weekly-departure-homogenous-map", label: "Weekly Departure Homogenous Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/weekly-departure-northWest-map", label: "Weekly Departure Northwest Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/weekly-departure-southPeninsular-map", label: "Weekly Departure Southpeninsular Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/weekly-departure-state-map", label: "Weekly Departure State Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/weekly-departure-subdiv-map", label: "Weekly Departure Subdiv Map", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/weekly-district-rf-distribution", label: "Weekly District Rf Distribution", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/weekly-homogenous-rf-distribution", label: "Weekly Homogenous Rf Distribution", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/weekly-state-rf-distribution", label: "Weekly State Rf Distribution", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/weekly-subdivision-rf-distribution", label: "Weekly Subdivision Rf Distribution", allowedRoles: ["hq", "mc", "public", "sp"] },
+  { path: "/yearlystationstatistics", label: "Yearly Station Stats", allowedRoles: ["hq", "mc", "sp"] },
 ];
 
 let ensurePromise = null;
@@ -94,7 +182,6 @@ const serializeUser = (row, roleCodes = []) => ({
   email: row.email || "",
   phone: row.phone || "",
   designation: row.designation || "",
-  district: row.district || "HQ",
   roleCodes: roleCodes.map(normalizeCode).filter(Boolean),
   active: row.active !== false,
   loginUserid: row.login_userid || null,
@@ -107,6 +194,41 @@ const serializeRoute = (row, allowedRoles = []) => ({
   allowedRoles: allowedRoles.map(normalizeCode).filter(Boolean),
   active: row.active !== false,
 });
+
+
+const seedDefaultRoutes = async () => {
+  for (const route of DEFAULT_ROUTES) {
+    const path = normalizePath(route.path);
+    const existing = await client.query(
+      `SELECT id FROM public.rbac_routes WHERE path = $1 LIMIT 1`,
+      [path]
+    );
+    let routeId;
+    let isNew = false;
+    if (existing.rows.length) {
+      routeId = existing.rows[0].id;
+    } else {
+      const inserted = await client.query(
+        `INSERT INTO public.rbac_routes (path, label, active)
+         VALUES ($1, $2, TRUE)
+         RETURNING id`,
+        [path, route.label]
+      );
+      routeId = inserted.rows[0].id;
+      isNew = true;
+    }
+    if (isNew) {
+      for (const code of route.allowedRoles || []) {
+        await client.query(
+          `INSERT INTO public.rbac_route_roles (route_id, role_code)
+           VALUES ($1, $2)
+           ON CONFLICT DO NOTHING`,
+          [routeId, normalizeCode(code)]
+        );
+      }
+    }
+  }
+};
 
 const ensureRbacTables = async () => {
   if (ensurePromise) return ensurePromise;
@@ -167,27 +289,7 @@ const ensureRbacTables = async () => {
       }
     }
 
-    const routeCount = await client.query(`SELECT COUNT(*)::int AS n FROM public.rbac_routes`);
-    if (!routeCount.rows[0].n) {
-      for (const route of DEFAULT_ROUTES) {
-        const inserted = await client.query(
-          `INSERT INTO public.rbac_routes (path, label, active)
-           VALUES ($1, $2, TRUE)
-           ON CONFLICT (path) DO UPDATE SET label = EXCLUDED.label
-           RETURNING id`,
-          [route.path, route.label]
-        );
-        const routeId = inserted.rows[0].id;
-        for (const code of route.allowedRoles) {
-          await client.query(
-            `INSERT INTO public.rbac_route_roles (route_id, role_code)
-             VALUES ($1, $2)
-             ON CONFLICT DO NOTHING`,
-            [routeId, code]
-          );
-        }
-      }
-    }
+    await seedDefaultRoutes();
 
     const userCount = await client.query(`SELECT COUNT(*)::int AS n FROM public.rbac_users`);
     if (!userCount.rows[0].n) {
@@ -239,7 +341,7 @@ const importLoginUsers = async () => {
         username,
         row.name || username,
         email,
-        "HQ",
+        "",
         active,
       ]
     );
@@ -544,7 +646,6 @@ const allowedPathsForRole = async (role) => {
 };
 
 module.exports = {
-  REGIONS,
   DEFAULT_ROLES,
   DEFAULT_ROUTES,
   normalizeCode,
@@ -554,6 +655,7 @@ module.exports = {
   serializeUser,
   serializeRoute,
   ensureRbacTables,
+  seedDefaultRoutes,
   listRoles,
   getRoleById,
   countUsersForRole,

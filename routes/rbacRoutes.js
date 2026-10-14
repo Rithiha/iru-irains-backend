@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getRegions,
   listRoles,
   createRole,
   updateRole,
@@ -22,7 +21,6 @@ const {
 } = require("../controllers/RbacController");
 
 // Catalog helpers
-router.get("/rbac/regions", getRegions);
 router.get("/rbac/allowed-routes", getAllowedRoutes);
 router.post("/rbac/allowed-routes", getAllowedRoutes);
 

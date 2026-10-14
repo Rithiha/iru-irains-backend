@@ -21,12 +21,6 @@ const parseRoleCodes = (body = {}) => {
   return [];
 };
 
-// ── Regions ───────────────────────────────────────────────
-
-exports.getRegions = withRbac(async (_req, res) => {
-  res.json({ success: true, data: rbac.REGIONS });
-});
-
 // ── Roles ─────────────────────────────────────────────────
 
 exports.listRoles = withRbac(async (_req, res) => {
@@ -126,7 +120,6 @@ exports.createUser = withRbac(async (req, res) => {
   const email = String(req.body?.email || "").trim();
   const phone = String(req.body?.phone || "").trim();
   const designation = String(req.body?.designation || "").trim();
-  const district = String(req.body?.district || "HQ").trim() || "HQ";
   const active = req.body?.active !== false;
   const roleCodes = parseRoleCodes(req.body).map(rbac.normalizeCode).filter(Boolean);
 
@@ -173,9 +166,9 @@ exports.createUser = withRbac(async (req, res) => {
   const inserted = await client.query(
     `INSERT INTO public.rbac_users
        (login_userid, username, full_name, email, phone, designation, district, active)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-     RETURNING id, login_userid, username, full_name, email, phone, designation, district, active`,
-    [loginUserid, username, fullName, email, phone, designation, district, active]
+     VALUES ($1, $2, $3, $4, $5, $6, '', $7)
+     RETURNING id, login_userid, username, full_name, email, phone, designation, active`,
+    [loginUserid, username, fullName, email, phone, designation, active]
   );
 
   const codes = await rbac.setUserRoles(inserted.rows[0].id, roleCodes);
@@ -208,10 +201,6 @@ exports.updateUser = withRbac(async (req, res) => {
     req.body?.designation != null
       ? String(req.body.designation).trim()
       : existing.designation;
-  const district =
-    req.body?.district != null
-      ? String(req.body.district).trim() || "HQ"
-      : existing.district;
   const active =
     req.body?.active != null ? !!req.body.active : existing.active;
   const password = req.body?.password ? String(req.body.password) : "";
@@ -255,11 +244,10 @@ exports.updateUser = withRbac(async (req, res) => {
          email = $5,
          phone = $6,
          designation = $7,
-         district = $8,
-         active = $9
+         active = $8
      WHERE id = $1
-     RETURNING id, login_userid, username, full_name, email, phone, designation, district, active`,
-    [id, loginUserid, username, fullName, email, phone, designation, district, active]
+     RETURNING id, login_userid, username, full_name, email, phone, designation, active`,
+    [id, loginUserid, username, fullName, email, phone, designation, active]
   );
 
   res.json({
